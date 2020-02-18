@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="style.css">
+    <!-- <script src="app.js"></script> -->
+    <title>Hangman Game</title>
+</head>
+
+<body>
+    <section class="main-container">
+        <header>
+            <h1>Hangman Game</h1>
+        </header>
+        <main class="game-body">
+            <div>
+                <p>Number of players: 2</p>
+            </div>
+            <div>
+                <p>Word Guesser, please look away from the screen</p>
+            </div>
+            <div>
+                <p>Word Creator, please type your word in the provided space and click start game button</p>
+            </div>
+            <div>
+                <input type="text" name="word" id="word" maxlength="20" placeholder="max 20 characters">
+                <button id="btnsubmit">Start Game</button>
+            </div>
+            <h2>WORDS</h2>
+            <div class="underscores"></div>
+            <p>Choose your letters from the provided alphabet.<span>You have 10 lifes!</span></p>
+            <div class="alphabetGoesHere">
+                <div class="row">
+                    <div class="btn-group" role="group" aria-label="Basic example" id="buttonGroup">
+                    </div>
+                  </div>
+                  <div class=row>
+                    <span class="badge badge-secondary" id="output"></span>
+                  </div>
+            </div>
+            <div id="result"></div>
+            <div>
+                <button id="reset">Play again</button>
+            </div>
+            <div>
+                <img src="/images/stickman.gif" alt="">
+            </div>
+        </main>
+    </section>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <script src="./app.js"></script>
+</body>
+
+</html>
