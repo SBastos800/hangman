@@ -62,4 +62,17 @@
   width: 75px;
   background-position: left;
 }
+
+.main-container .game-body .success {
+  background-color: green;
+}
+
+.main-container .game-body .error {
+  background-color: red;
+}
+
+.main-container .game-body .underscore {
+  display: inline-block;
+  margin: 5px;
+}
 /*# sourceMappingURL=style.css.map */

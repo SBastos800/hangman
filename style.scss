@@ -46,11 +46,25 @@
             width: 30%;
         }
 
-        img{ 
+        img { 
             display: flex;
             height: 75px;
             width: 75px;
             background-position: left;
         }  
+
+        .success {
+            background-color: green;
+
+        }
+
+        .error {
+            background-color: red;
+        }
+        .underscore {
+            display: inline-block;
+            margin: 5px;
+            
+        }
     }
 }

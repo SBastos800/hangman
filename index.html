@@ -26,20 +26,20 @@
                 <p>Word Creator, please type your word in the provided space and click start game button</p>
             </div>
             <div>
-                <input type="text" name="word" id="word" maxlength="20" placeholder="max 20 characters">
+                <input type="password" name="word" id="word" maxlength="20" placeholder="max 20 characters">
                 <button id="btnsubmit">Start Game</button>
             </div>
             <h2>WORDS</h2>
-            <div class="underscores"></div>
-            <p>Choose your letters from the provided alphabet.<span>You have 10 lifes!</span></p>
+            <div class="underscores"><span class="badge badge-secondary" id="output"></span></div>
+            <p>Choose your letters from the provided alphabet.<span class="lives">You have 10 lifes!</span></p>
             <div class="alphabetGoesHere">
                 <div class="row">
                     <div class="btn-group" role="group" aria-label="Basic example" id="buttonGroup">
                     </div>
-                  </div>
-                  <div class=row>
+                </div>
+                <!-- <div class=row>
                     <span class="badge badge-secondary" id="output"></span>
-                  </div>
+                </div> -->
             </div>
             <div id="result"></div>
             <div>
