@@ -2,21 +2,22 @@ const $onload = () => {
 
     const alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
     let maxTries = 10;  //maximum number of times to guess
-    let guessedLetters = [];  // Stores the letters the user guessed
-    let guessingWord = [];    // This will be the word we actually build to match the current word
-    let remainingGuesses = 10; // How many tries the player has left (10 or empty??)
+    
     let lettersTypedByWordCreator = ""; //Stores the letters typed by word creator
 
     let input = document.getElementById('word');
     let arrayOfLettersTypedByCreator = [];
-    // let letterTyped = "";
+
     
+ 
+    
+
     const pushIndexOfLetters = (item) => {
         let indexOfEqualLetters = [];
         for (let i = 0; i < lettersTypedByWordCreator.length; i++) {
 
             if (item.html() === lettersTypedByWordCreator[i]) indexOfEqualLetters.push(i)
-            
+
         }
         return indexOfEqualLetters;
     }
@@ -25,6 +26,14 @@ const $onload = () => {
         if (arrayOfLettersTypedByCreator.includes(item.html())) {
             item.addClass('success');
             const indexes = pushIndexOfLetters(item);
+            console.log(indexes);
+            const divs = $('.underscore');
+            indexes.forEach(index => {
+            (divs[index].innerHTML) = item.html();
+
+            })
+            console.log(divs);
+        
             // select all .underscore divs
             // replace the .text with the letter at indexes
             // console.log(arrayOfLettersTypedByCreator.indexOf(item.html()));
@@ -34,10 +43,19 @@ const $onload = () => {
             item.addClass('error');
             maxTries--;
             $('.lives').text(`You have ${maxTries} lives left`)
-        };
-    }
+            if(maxTries === 0) {
+            $('.lives').text(`You have ${maxTries} lives you LOST the game! `)    
+        }
 
-    document.getElementById('btnsubmit').onclick = function () {
+         
+        }
+
+        // const stop = () => {
+        
+        // }
+    }
+    
+    $('#btnsubmit').one('click', function(){
         lettersTypedByWordCreator = input.value;
         // console.log(lettersTypedByWordCreator);
         arrayOfLettersTypedByCreator = lettersTypedByWordCreator.split("");
@@ -52,23 +70,15 @@ const $onload = () => {
         div.innerHTML += content;
 
         $('.letter-button').click(function () {
-            //console.log('hello world')
-            // $(this).value
-            // const letterClicked = $(this).html();
-            // console.log(letterClicked);
-            // if(arrayOfLettersTypedByCreator.indexOf(letterClicked) > -1){
-            // console.log(arrayOfLettersTypedByCreator);
-            // }
-            // else if (arrayOfLettersTypedByCreator.indexOf(letterClicked) < 0){
-            //     console.log(arrayOfLettersTypedByCreator);
-            // }
-            // if (arrayOfLettersTypedByCreator.includes(letterClicked)) {
-            //     $(this).addClass('success');
-            // }
+           
             giveLetterAColor($(this));
 
 
         })
+        
+    })
+    
+        
 
         // When a letter is clicked,
         // Check if the letter that was clicked is in arrayOfLettersTypedByCreator
@@ -77,7 +87,7 @@ const $onload = () => {
         // Else 
         // Turn the letter red and add one to the number of incorrect moves
 
-    };
+    
 
     let generateUnderscore = () => {
         for (let i = 0; i < arrayOfLettersTypedByCreator.length; i++) {
@@ -88,7 +98,25 @@ const $onload = () => {
         }
     }
 
-    //
+    const resetBoard = () => {
+        maxTries = 0;
+        arrayOfLettersTypedByCreator = [];
+        $('.underscore').empty();
+        $('.underscores').empty();
+        $('#word').empty();
+    }
+    
+
+   
+
+    $('#reset').click(function () {
+        resetBoard();
+    
+    })
+
+    
+
+    
 
 }
 $onload();
