@@ -63,6 +63,13 @@ const createKeyboard = () => {
 
 const $onload = () => {
 
+    $('#word').on('keypress', function (event) {
+        // console.log(event);
+        if (event.key == 'Enter') { //key 13 is the enter key
+            $('#btnsubmit').click()
+        }
+    });
+
     $('#btnsubmit').one('click', function () {
         $('#btnsubmit').hide();
         let triesLeft = 10;  //number of tries left for the user to guess
@@ -80,6 +87,8 @@ const $onload = () => {
             location.reload(true);
         })
     })
+
+
 
     // const resetBoard = () => {
     //     maxTries = 10;
