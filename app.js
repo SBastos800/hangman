@@ -8,15 +8,15 @@ const getEqualLettersIndexes = (item, inputtedWord) => {
     return indexOfEqualLetters;
 }
 
-const handleLetterSelection = (letterButton, inputtedWord, triesLeft) => {
+const handleLetterSelectionAndRecalculateTriesLeft = (letterButton, inputtedWord, triesLeft) => {
     if (inputtedWord.includes(letterButton.html())) {
         letterButton.addClass('success');
         //replace the underscores by letters chosen
-        const indexes = getEqualLettersIndexes(letterButton, inputtedWord); 
+        const indexes = getEqualLettersIndexes(letterButton, inputtedWord);
         // console.log(indexes);
         const divs = $('.underscore');
         divs.each((indexOfDiv) => {
-            if(indexes.includes(indexOfDiv)){
+            if (indexes.includes(indexOfDiv)) {
                 divs[indexOfDiv].innerHTML = letterButton.html();
             }
         })
@@ -26,6 +26,7 @@ const handleLetterSelection = (letterButton, inputtedWord, triesLeft) => {
         triesLeft--;
         $('.lives').text(`You have ${triesLeft} live(s) left`);
     }
+    return triesLeft;
 }
 
 const winnerOrLooser = (triesLeft) => {
@@ -40,74 +41,45 @@ const winnerOrLooser = (triesLeft) => {
             return;
         }
     }
-    // Here everything for a win goes here
+
     console.log("win");
-    //     console.log("winner");
     $('.lives').text(`You Won the game with ${triesLeft} live(s) left`);
     $('.letter-button').off();
-    // }
-
-
 }
 
+let generateUnderscore = (inputtedWord) => {
+    for (let i = 0; i < inputtedWord.length; i++) {
+        $('.underscores').append(`<div class="underscore">_</div>`);
+    }
+}
 
+const createKeyboard = () => {
+    const alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
+
+    const content = alphabet.map(letter => `<button type="button" class="letter-button" value="${letter}">${letter}</button>`);
+    const div = document.getElementById('buttonGroup');
+    div.innerHTML += content.join('');
+}
 
 const $onload = () => {
 
-    const alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
-    let triesLeft = 10;  //number of tries left for the user to guess
-
-    let inputtedWord = ""; //Stores the string typed by word creator
-
-    let input = document.getElementById('word');
-
-
-   
-
-   
-
-
-    
-
-
-
-
     $('#btnsubmit').one('click', function () {
-        inputtedWord = input.value;
-        generateUnderscore();
-
-
-        const content = alphabet.map(letter => `<button type="button" class="letter-button" value="${letter}">${letter}</button>`);
-        const div = document.getElementById('buttonGroup');
-        // const output = document.getElementById('output');
-        div.innerHTML += content.join('');
-
+        $('#btnsubmit').hide();
+        let triesLeft = 10;  //number of tries left for the user to guess
+        let input = document.getElementById('word');
+        let inputtedWord = input.value; //Stores the string typed by word creator
+        generateUnderscore(inputtedWord);
+        createKeyboard();
 
         $('.letter-button').on("click", function () {
-            handleLetterSelection($(this), inputtedWord, triesLeft);
+            triesLeft = handleLetterSelectionAndRecalculateTriesLeft($(this), inputtedWord, triesLeft);
             winnerOrLooser(triesLeft);
         })
 
+        $('#reset').click(function () {
+            location.reload(true);
+        })
     })
-
-
-
-    // When a letter is clicked,
-    // Check if the letter that was clicked is in arrayOfLettersTypedByCreator
-    // If it is in the array, 
-    // turn the letter green and add it to the dashes on the page
-    // Else 
-    // Turn the letter red and add one to the number of incorrect moves
-
-
-
-    let generateUnderscore = () => {
-        for (let i = 0; i < inputtedWord.length; i++) {
-            $('.underscores').append(`<div class="underscore">_</div>`);
-
-            // console.log(arrayOflettersTypedByCreator.length);
-        }
-    }
 
     // const resetBoard = () => {
     //     maxTries = 10;
@@ -119,17 +91,6 @@ const $onload = () => {
     //     $('.lives').text(`You have ${maxTries} lives left`);
     //     $('.letter-button').removeClass('success');
     //     $('.letter-button').removeClass('error');
-
-
-    // }
-
-
-    $('#reset').click(function () {
-        // resetBoard();
-        location.reload(true);
-
-
-    })
 
 }
 $onload();
