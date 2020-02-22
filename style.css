@@ -74,5 +74,7 @@
 .main-container .game-body .underscore {
   display: inline-block;
   margin: 5px;
+  font-weight: bold;
+  font-size: 40px;
 }
 /*# sourceMappingURL=style.css.map */
