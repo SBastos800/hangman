@@ -46,31 +46,31 @@ const $onload = () => {
 
 
     const winnerOrLooser = () => {
-        
+
         const underscoresContent = document.querySelectorAll('.underscore');
-    
+
         for (let i = 0; i < underscoresContent.length; i++) {
             if (underscoresContent[i].innerHTML === "_") {
                 console.log("no win")
                 if (maxTries === 0) {
                     $('.lives').text(`You have ${maxTries} live(s), you LOST the game! `);
                     $('.letter-button').off();
-                 }
+                }
                 return;
-                
+
             }
         }
         // Here everything for a win goes here
         console.log("win");
         // if (maxTries > 0 && JSON.stringify(inputArrayOfLettersClicked)==JSON.stringify(arrayOfLettersTypedByCreator)) {
         //     console.log("winner");
-            $('.lives').text(`You Won the game with ${maxTries} live(s) left`);
-            $('.letter-button').off();
+        $('.lives').text(`You Won the game with ${maxTries} live(s) left`);
+        $('.letter-button').off();
         // }
-        
-        
+
+
     }
-   
+
 
 
 
@@ -86,7 +86,7 @@ const $onload = () => {
         const content = alphabet.map(letter => `<button type="button" class="letter-button" value="${letter}">${letter}</button>`);
         const div = document.getElementById('buttonGroup');
         // const output = document.getElementById('output');
-        div.innerHTML += content;
+        div.innerHTML += content.join('');
 
 
         $('.letter-button').on("click", function () {
