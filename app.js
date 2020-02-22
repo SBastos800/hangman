@@ -1,85 +1,79 @@
+const getEqualLettersIndexes = (item, inputtedWord) => {
+    let indexOfEqualLetters = [];
+    for (let i = 0; i < inputtedWord.length; i++) {
+        if (item.html() === inputtedWord[i]) {
+            indexOfEqualLetters.push(i)
+        }
+    }
+    return indexOfEqualLetters;
+}
+
+const handleLetterSelection = (letterButton, inputtedWord, triesLeft) => {
+    if (inputtedWord.includes(letterButton.html())) {
+        letterButton.addClass('success');
+        //replace the underscores by letters chosen
+        const indexes = getEqualLettersIndexes(letterButton, inputtedWord); 
+        // console.log(indexes);
+        const divs = $('.underscore');
+        divs.each((indexOfDiv) => {
+            if(indexes.includes(indexOfDiv)){
+                divs[indexOfDiv].innerHTML = letterButton.html();
+            }
+        })
+        // console.log(divs);
+    } else {
+        letterButton.addClass('error');
+        triesLeft--;
+        $('.lives').text(`You have ${triesLeft} live(s) left`);
+    }
+}
+
+const winnerOrLooser = (triesLeft) => {
+    const underscoresContent = document.querySelectorAll('.underscore');
+    for (let i = 0; i < underscoresContent.length; i++) {
+        if (underscoresContent[i].innerHTML === "_") {
+            console.log("no win")
+            if (triesLeft === 0) {
+                $('.lives').text(`You have ${triesLeft} live(s), you LOST the game! `);
+                $('.letter-button').off();
+            }
+            return;
+        }
+    }
+    // Here everything for a win goes here
+    console.log("win");
+    //     console.log("winner");
+    $('.lives').text(`You Won the game with ${triesLeft} live(s) left`);
+    $('.letter-button').off();
+    // }
+
+
+}
+
+
+
 const $onload = () => {
 
     const alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
-    let maxTries = 10;  //maximum number of times to guess
+    let triesLeft = 10;  //number of tries left for the user to guess
 
-    let lettersTypedByWordCreator = ""; //Stores the letters typed by word creator
+    let inputtedWord = ""; //Stores the string typed by word creator
 
     let input = document.getElementById('word');
-    let arrayOfLettersTypedByCreator = [];
 
 
-    const pushIndexOfLetters = (item) => {
-        let indexOfEqualLetters = [];
-        for (let i = 0; i < lettersTypedByWordCreator.length; i++) {
+   
 
-            if (item.html() === lettersTypedByWordCreator[i]) indexOfEqualLetters.push(i)
-
-        }
-        return indexOfEqualLetters;
-    }
-
-    const giveLetterAColor = (item) => {
-        if (arrayOfLettersTypedByCreator.includes(item.html())) {
-            item.addClass('success');
-            const indexes = pushIndexOfLetters(item);
-            console.log(indexes);
-            const divs = $('.underscore');
-            indexes.forEach(index => {
-                (divs[index].innerHTML) = item.html();
-
-            })
-            console.log(divs);
-
-            // select all .underscore divs
-            // replace the .text with the letter at indexes
-            // console.log(arrayOfLettersTypedByCreator.indexOf(item.html()));
-
-            // add to word array
-        } else {
-            item.addClass('error');
-            maxTries--;
-            $('.lives').text(`You have ${maxTries} live(s) left`);
-
-        }
-    }
+   
 
 
-    const winnerOrLooser = () => {
-
-        const underscoresContent = document.querySelectorAll('.underscore');
-
-        for (let i = 0; i < underscoresContent.length; i++) {
-            if (underscoresContent[i].innerHTML === "_") {
-                console.log("no win")
-                if (maxTries === 0) {
-                    $('.lives').text(`You have ${maxTries} live(s), you LOST the game! `);
-                    $('.letter-button').off();
-                }
-                return;
-
-            }
-        }
-        // Here everything for a win goes here
-        console.log("win");
-        // if (maxTries > 0 && JSON.stringify(inputArrayOfLettersClicked)==JSON.stringify(arrayOfLettersTypedByCreator)) {
-        //     console.log("winner");
-        $('.lives').text(`You Won the game with ${maxTries} live(s) left`);
-        $('.letter-button').off();
-        // }
-
-
-    }
+    
 
 
 
 
     $('#btnsubmit').one('click', function () {
-        lettersTypedByWordCreator = input.value;
-        // console.log(lettersTypedByWordCreator);
-        arrayOfLettersTypedByCreator = lettersTypedByWordCreator.split("");
-        // console.log(arrayOflettersTypedByCreator);
-        // console.log(arrayOflettersTypedByCreator.length);
+        inputtedWord = input.value;
         generateUnderscore();
 
 
@@ -90,8 +84,8 @@ const $onload = () => {
 
 
         $('.letter-button').on("click", function () {
-            giveLetterAColor($(this));
-            winnerOrLooser();
+            handleLetterSelection($(this), inputtedWord, triesLeft);
+            winnerOrLooser(triesLeft);
         })
 
     })
@@ -108,7 +102,7 @@ const $onload = () => {
 
 
     let generateUnderscore = () => {
-        for (let i = 0; i < arrayOfLettersTypedByCreator.length; i++) {
+        for (let i = 0; i < inputtedWord.length; i++) {
             $('.underscores').append(`<div class="underscore">_</div>`);
 
             // console.log(arrayOflettersTypedByCreator.length);
@@ -136,10 +130,6 @@ const $onload = () => {
 
 
     })
-
-
-
-
 
 }
 $onload();
