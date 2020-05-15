@@ -78,7 +78,7 @@ const $onload = () => {
         $('#word').hide();
         let triesLeft = 10;  //number of tries left for the user to guess
         let input = document.getElementById('word');
-        let inputtedWord = input.value; //Stores the string typed by word creator
+        let inputtedWord = input.value.toLowerCase(); //Stores the string typed by word creator
         generateUnderscore(inputtedWord);
         createKeyboard();
 
